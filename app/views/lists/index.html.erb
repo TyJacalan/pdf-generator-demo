@@ -1,0 +1,19 @@
+<div class='flex flex-row justify-between m-4'>
+  <h1 class='text-2xl'>Lists</h1>
+
+  <%= link_to 'New List', new_list_path, class: 'w-fit no-underline px-2 py-1 rounded-md bg-slate-950 text-slate-100' %>
+</div>
+
+<table>
+  <thead class='w-full bg-slate-200'>
+    <tr>
+      <th class='w-full'>Title</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%= render @lists %>
+  </tbody>
+</table>
+

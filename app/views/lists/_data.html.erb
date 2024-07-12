@@ -1,0 +1,24 @@
+<!-- app/views/lists/_data.html.erb -->
+
+<% if list.data.any? %>
+  <table>
+    <thead class='bg-slate-200'>
+      <tr>
+        <% list.data.first.keys.each do |key| %>
+          <th class='p-2 text-left'><%= key.to_s.capitalize %></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% list.data.each do |item| %>
+        <tr class='border-b border-slate-200'>
+          <% item.each do |key, value| %>
+            <td class='p-2 text-left'><%= value %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No data found for this list.</p>
+<% end %>

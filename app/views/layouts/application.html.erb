@@ -10,17 +10,24 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
-  <body class='h-full w-full flex flex-col bg-slate-100 overflow-y-auto'>
-    <nav class='w-full flex flex-row justify-between p-6 sm:px-12 shadow-md'>
-      <%= link_to 'Home', root_path, class: 'font-semibold no-underline' %>
+  <body class='h-full min-h-screen w-full flex flex-col bg-slate-100 overflow-y-auto'>
+    <nav class='h-fit w-full flex flex-row justify-between p-6 sm:px-12 shadow-md'>
+      <ul class='flex flex-row gap-4'>
+        <li>
+          <%= link_to 'Home', root_path, class: 'font-semibold no-underline' %>
+        <li>
+        <li>
+          <%= link_to 'Lists', lists_path, class: 'no-underline' %>
+        </li>
+      </ul>
       <% if user_signed_in? %>
         <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: 'bg-slate-100 text-slate-950' %>
       <% end %>
     </nav>
-    <section class='h-full w-full flex flex-col gap-4 p-6 sm:px-12'>
+    <section class='flex-1 h-full w-full flex flex-col gap-4 p-6 sm:px-12'>
       <%= yield %>
     </section>
-    <footer class='w-fit mx-auto flex flex-row p-6 gap-12 text-sm'>
+    <footer class='h-10 w-fit mx-auto flex flex-row p-6 gap-12 text-sm'>
       <span>&copy; Ty Jacalan, 2024</span>
     </footer>
   </body>

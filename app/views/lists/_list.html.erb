@@ -1,0 +1,10 @@
+<tr class='border-b border-slate-200'>
+  <td class='px-4 py-2'><%= list.name %></td>
+  <td class='px-4 py-2'>
+    <div class='flex flex-row gap-2'>
+      <%= link_to 'Show', list, class: 'no-underline' %>
+      <%= link_to 'Edit', edit_list_path(list), class: 'no-underline' %>
+      <%= button_to 'Destroy', list, method: :delete, class: 'bg-transparent text-red-600' %>
+    </div>
+  </td>
+</tr>

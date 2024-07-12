@@ -1,0 +1,13 @@
+<%= form_with(model: list, local: true) do |form| %>
+  <div class='max-w-[500px] flex flex-col gap-4'>
+    <div class='w-fit'>
+      <%= form.submit %>
+    </div>
+
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+
+    <%= form.label :data %>
+    <%= form.text_area :data, class: 'rounded-md shadow-md p-2 focus-visible:outline-none focus-visible:border focus-visible:border-slate-400' %>
+  </div>
+<% end %>
