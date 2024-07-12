@@ -1,24 +1,29 @@
-# README
+# PDF Generator
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This project allows users to generate pdf(s). Users are able to create lists to create dynamic content.
 
-Things you may want to cover:
+# Dependencies
 
-* Ruby version
+- Devise
+- Grover
+- RubyZip
 
-* System dependencies
+# Usage
 
-* Configuration
+1. Install
 
-* Database creation
+```
+bundle && yarn install
+```
 
-* Database initialization
+2. Create the database
 
-* How to run the test suite
+```
+bin/rails db:create && bin/rails db:migrate
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+1. (Optional) Seed the data
 
-* Deployment instructions
-
-* ...
+```
+bin/rails db:seed
+```
