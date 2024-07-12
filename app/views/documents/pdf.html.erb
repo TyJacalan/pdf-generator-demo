@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= @document.title %></title>
+  </head>
+  <body>
+    <%= @document.content.body.to_s.html_safe %>
+  </body>
+</html>
+
