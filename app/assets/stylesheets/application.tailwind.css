@@ -49,19 +49,6 @@ a {
   text-decoration: underline;
 }
 
-.trix-button {
-  font-size: small;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.375rem;
-}
-
-.trix-button-row {
-  display: flex;
-  flex-direction: row;
-  gap: 0.375rem;
-  flex-wrap: wrap;
-}
-
 .trix-content {
   background: var(--slate-100);
   padding: 4rem;
