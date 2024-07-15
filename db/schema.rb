@@ -57,7 +57,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_12_083229) do
     t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "list_id", null: false
+    t.bigint "list_id"
     t.index ["list_id"], name: "index_documents_on_list_id"
   end
 
