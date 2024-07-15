@@ -41,51 +41,59 @@ class DocumentsController < ApplicationController
   end
 
   def pdf
-    # Set content
-    data = [
-      {
-        name: "John Doe",
-        position: "Software Engineer"
-      },
-      {
-        name: "Jane Smith",
-        position: "Product Manager"
-      }
-    ]
+    if @document.list_id.present?
+      list = List.find(@document.list_id)
+      data = list.data
 
-    pdfs = []
+      pdfs = []
 
-    data.each_with_index do |d, index|
+      data.each_with_index do |d, index|
+        html = render_to_string(template: "documents/pdf", layout: "pdf", locals: { document: @document })
+
+        # Replace content
+        d.each do |key, value|
+          html.gsub!(/#\{#{key}\}/, value)
+        end
+
+        style_tag_options = [
+          { path: Rails.root.join('app', 'assets', 'stylesheets', 'pdf.css').to_s }
+        ]
+
+        grover = Grover.new(html, style_tag_options:, format: 'A4')
+        pdf_content = grover.to_pdf
+
+        pdfs << { filename: "#{d[:name]}_#{index + 1}.pdf", content: pdf_content }
+      end
+
+      zip_filename = "documents_#{Time.zone.now.strftime('%Y%m%d%H%M%S')}.zip"
+      temp_zipfile = Tempfile.new(zip_filename)
+
+      Zip::OutputStream.open(temp_zipfile) { |zos| }
+
+      zip_filename = "documents_#{Time.now.strftime('%Y%m%d%H%M%S')}.zip"
+
+      pdfs.each do |file|
+        Zip::File.open(temp_zipfile.path, Zip::File::CREATE) do |zipfile|
+          zipfile.get_output_stream(file[:filename]) { |f| f.write(file[:content]) }
+        end
+      end
+
+      # send_data pdf_content, filename: "#{@document.title}.pdf", type: "application/pdf"
+      send_file temp_zipfile.path, filename: zip_filename, type: "application/zip"
+
+      temp_zipfile.close
+    else
       html = render_to_string(template: "documents/pdf", layout: "pdf", locals: { document: @document })
 
-      # Replace content
-      d.each do |key, value|
-        html.gsub!(/#\{#{key}\}/, value)
-      end
+      style_tag_options = [
+        { path: Rails.root.join('app', 'assets', 'stylesheets', 'pdf.css').to_s }
+      ]
 
-      grover = Grover.new(html)
+      grover = Grover.new(html, style_tag_options:, format: 'A4')
       pdf_content = grover.to_pdf
 
-      pdfs << { filename: "#{d[:name]}_#{index + 1}.pdf", content: pdf_content }
+      send_data pdf_content, filename: "#{@document.title}", type: "application/pdf"
     end
-
-    zip_filename = "documents_#{Time.now.strftime('%Y%m%d%H%M%S')}.zip"
-    temp_zipfile = Tempfile.new(zip_filename)
-
-    Zip::OutputStream.open(temp_zipfile) { |zos| }
-
-    zip_filename = "documents_#{Time.now.strftime('%Y%m%d%H%M%S')}.zip"
-    
-    pdfs.each do |file|
-      Zip::File.open(temp_zipfile.path, Zip::File::CREATE) do |zipfile|
-        zipfile.get_output_stream(file[:filename]) { |f| f.write(file[:content]) }
-      end
-    end
-
-    # send_data pdf_content, filename: "#{@document.title}.pdf", type: "application/pdf"
-    send_file temp_zipfile.path, filename: zip_filename, type: "application/zip"
-
-    temp_zipfile.close
   end
 
   private
@@ -95,6 +103,6 @@ class DocumentsController < ApplicationController
   end
 
   def document_params
-    params.require(:document).permit(:title, :content)
+    params.require(:document).permit(:title, :content, :list_id)
   end
 end

@@ -64,12 +64,12 @@ a {
 
 .trix-content {
   background: var(--slate-100);
-  margin: 0;
-  border: 1px solid var(--slate-400);
   padding: 4rem;
   height: 842px;
-  width: 595px;
-  font-size: 10px;
+  width: 673px;
+  font-size: 14px;
+  line-height: 1.5rem;
+  letter-spacing: 0;
 }
 
 @import "actiontext.css";

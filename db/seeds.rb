@@ -30,13 +30,13 @@ List.destroy_all
 
 lists_data = [
   { name: 'Users', data: [
-      { name: 'John Doe', position: 'Developer' },
-      { name: 'Alice Smith', position: 'Manager' }
+    { name: 'John Doe', position: 'Developer', email: 'john@example.com'},
+    { name: 'Alice Smith', position: 'Manager', email: 'alice@example.com' }
     ]
   },
   { name: 'Customers', data: [
-      { name: 'Bob Johnson', company: 'ABC Inc.' },
-      { name: 'Emily Brown', company: 'XYZ Corp.' }
+    { name: 'Bob Johnson', company: 'ABC Inc.', email: 'bob@example.com' },
+    { name: 'Emily Brown', company: 'XYZ Corp.', email: 'emily@example.com' }
     ]
   },
   { name: 'Products', data: [

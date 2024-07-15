@@ -16,6 +16,9 @@
       <div class='flex flex-row items-center gap-2'>
         <%= form.label :title %>
         <%= form.text_field :title %>
+
+        <%= form.label :list_id %>
+        <%= form.collection_select :list_id, List.all, :id, :name, prompt: 'Select' %>
       </div>
 
       <div class='w-fit'>
@@ -24,7 +27,7 @@
     </div>
 
     <%= form.label :content %>
-    <div class='min-w-[650px] flex flex-col items-center gap-4 bg-slate-200 p-6 rounded-md'>
+    <div class='min-w-[650px] flex flex-col items-center gap-4 bg-slate-200 rounded-md'>
       <%= form.rich_text_area :content %>
     </div>
   </div>

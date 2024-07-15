@@ -8,6 +8,6 @@
     <%= form.text_field :name %>
 
     <%= form.label :data %>
-    <%= form.text_area :data, class: 'rounded-md shadow-md p-2 focus-visible:outline-none focus-visible:border focus-visible:border-slate-400' %>
+    <%= form.text_area :data, value: list.data.to_json, class: 'rounded-md shadow-md p-2 focus-visible:outline-none focus-visible:border focus-visible:border-slate-400' %>
   </div>
 <% end %>
