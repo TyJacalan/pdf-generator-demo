@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class DocumentsController < ApplicationController
-  before_action :set_document, only: %i[show edit update destroy pdf]
+  before_action :set_document, only: %i[show edit update destroy pdf email_pdfs]
 
   def index
     @documents = Document.all
@@ -93,6 +93,35 @@ class DocumentsController < ApplicationController
       pdf_content = grover.to_pdf
 
       send_data pdf_content, filename: "#{@document.title}", type: "application/pdf"
+    end
+  end
+
+  def email_pdfs
+    if @document.list_id.present?
+      list = List.find(@document.list_id)
+      data = list.data
+
+      data.each do |d|
+        next unless d['email'].present?
+
+        html = render_to_string(template: "documents/pdf", layout: "pdf", locals: { document: @document })
+
+        d.each do |key, value|
+          html.gsub!(/#\{#{key}\}/, value)
+        end
+
+        grover = Grover.new(html)
+        pdf_content = grover.to_pdf
+
+        Rails.logger.info "Email: #{d['email']}"
+
+        email = d['email']
+        DocumentMailer.send_pdf_email(email, pdf_content).deliver_now
+        # DocumentMailer.with(email: d['email'], pdf: pdf_content).send_pdf_email.deliver_later
+      end
+      redirect_to documents_path, notice: 'PDFs sent successfully.'
+    else
+      redirect_to @document, alert: 'List ID is not present.'
     end
   end
 

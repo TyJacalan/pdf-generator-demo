@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :documents do
     member do
       get :pdf
+      get :email_pdfs
     end
   end
 

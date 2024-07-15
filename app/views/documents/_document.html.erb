@@ -5,7 +5,8 @@
       <%= link_to 'Show', document %>
       <%= link_to 'Edit', edit_document_path(document) %>
       <%= link_to 'Destroy', document, method: :delete, data: { confirm: 'Are you sure?' } %>
-      <%= link_to 'Download PDF', pdf_document_path(document), target: "_blank", class: 'text-nowrap' %>
+      <%= link_to 'Download', pdf_document_path(document), target: "_blank", class: 'text-nowrap' %>
+      <%= link_to 'Email', email_pdfs_document_path(document), method: :post, data: { turbo: false }, class: 'text-nowrap' %>
     </div>
   </td>
 </tr>
